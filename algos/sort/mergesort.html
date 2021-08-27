@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jiawei Gao" />
+    <meta name="subject" content="Jiawei Gao" />
+    <title>Merge Sort</title>
+    <link rel="stylesheet" type="text/css" href="document/style.css" />
+    <!-- <script src="document/script.js"></script> -->
+</head>
+<body>
+<a href="index.html"><span style="font-size:14pt;">[HOME]</span></a>
+
+<h1 id="merge-sort">Merge Sort</h1>
+
+<h2 id="desc">Description</h1>
+
+<p>The merge sort algorithm closely follows the <b>divide-and-conquer</b> paradigm. Intuitively, it operates as follows.<br>
+  <b>Divide:</b> Divide the n-element sequence to be sorted into two subsequences of n=2
+  elements each.<br>
+  <b>Conquer:</b>  Sort the two subsequences recursively using merge sort.<br>
+  <b>Combine:</b>  Merge the two sorted subsequences to produce the sorted answer.</p>
+
+<p>Therefore we need to implement two methods, a merge routine which merges two sorted arrays into one and a sort routine which recursively invoking itself to split the arrays and sort each part then merge them.</p>
+
+<h3 id="pseudocode">Pseudocode</h3>
+
+<p>We use A to denote our array of elements, p refers to the left most index, q is the index of the middle element and r is the index of the right most element.</p> 
+<p>To implement the merge routine, we place at the end of the array a <b>sentinel</b> value to make code simpler. We use &infin; to represent the <b>sentinel</b> so that nothing can be smaller than that value.</p> 
+
+<pre><code>
+Merge(A, p, q, r)
+  n1 = q - p - 1
+  n2 = r - q
+  let L = new array of size n1 + 1
+  let R = new array of size n2 + 1
+  for i = 1 to n1
+    L[i] = A[p + i - 1]
+  for j = 1 to n2
+    R[i] = A[q + i]
+  L[n1 + 1] = &infin;
+  R[n2 + 1] = &infin;
+  i = j = 1;
+  for k = p to r
+    if L[i] &le; R[j]
+      A[k] = L[i]
+      i = i + 1
+    else
+      A[k] = R[j]
+      j = j + 1</code></pre>
+
+<pre><code>
+Merge-Sort(A, p, r)
+ if p &lt; r
+   q = &lfloor; (p + r) / 2 &rfloor;
+   Merge-Sort(A, p, q)
+   Merge-Sort(A, q + 1, r)
+   Merge(A, p, q, r)</code></pre>
+
+<h2 id="impl">Implementation</h1>
+
+<p> If you want to use the click-and-play version, then you can download the tarball(TODO link). 
+Please refer to <a href="index.html#demo">the demonstration section</a> for more details.
+If you are only interested in the algorithm, you can download the source files below and create 
+your drive code to test.
+</p>
+
+<h3>C</h3>
+
+<ul>
+  <li> <a href="code/C/src/sort/mergesort.c">mergesort.c</a> 
+  <li> <a href="code/C/include/mergesort.h">mergesort.h</a>
+</ul>
+
+<h3>C++</h3>
+
+<ul>
+  <li> <a href="code/CPP/src/sort/mergesort.cpp">mergesort.cpp</a> 
+  <li> <a href="code/CPP/include/mergesort.hpp">mergesort.hpp</a>
+</ul>
+
+<h3>Python</h3>
+
+<ul>
+  <li> <a href="code/Python/src/sort/mergesort.py">mergesort.py</a> 
+</ul>
+
+<h2 id="test">Test</h1>
+
+TODO
+
+<h2 id="anime">Animation</h1>
+
+TODO
+
+</body>
+</html>

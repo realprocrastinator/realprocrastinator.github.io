@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jiawei Gao" />
+    <meta name="subject" content="Jiawei Gao" />
+    <title>Sort</title>
+    <link rel="stylesheet" type="text/css" href="document/style.css" />
+    <!-- <script src="document/script.js"></script> -->
+</head>
+<body>
+
+<a href="../index.html"><span style="font-size:14pt;">[HOME]</span></a>
+
+<h1 id="sort"> Sorting Algorithms Review </h1>
+
+<p>
+In this chapter we will cover 10 common sorting algorithms at the moment. We will do describe the algorithm, introduce the pseudo code, show implementation in C/C++, Python. And finally we will do unit test and bench mark on each of them as well. Micro-benchmark will show the comparison between different algorithms. And the a Macro-benchmark mark will compare same algorithm running on different languages.  
+</p>
+
+<h2 id="common-sort"> Common </h2>
+
+<p>
+	The following table summarizes the running times of the common sorting algorithm. 
+	As usual, n denotes the number of items to sort. For counting
+	sort, the items to sort are integers in the set {0, 1......, k}. 
+	For radix sort, each item is a d -digit number, where each digit takes on k 
+	possible values. 
+	For bucket sort, we assume that the keys are real numbers 
+	uniformly distributed in the half-open interval [0, 1).
+</p>
+
+<table class="tl" style="text-align: center;">
+  <thead><tr></tr><th>Algorithm</td><th>Worst-case running time</td><th>Average-case/expected running time</td></tr></thead>
+	<tr></tr><th>Bubble sort</th><td>&Theta; (n<sup>2</sup>)</td><td>&Theta; (n<sup>2</sup>)</td></tr>
+	<tr></tr><th>Insertion sort</th><td>&Theta; (n<sup>2</sup>)</td><td>&Theta; (n<sup>2</sup>)</td></tr>
+	<tr></tr><th>Merge sort</th><td>&Theta; (n &nbsp; lg &nbsp; n)</td><td>&Theta; (n<sup>2</sup>)</td></tr>
+	<tr></tr><th>Insertion sort</th><td>&Theta; (n<sup>2</sup>)</td><td>&Theta; (n<sup>2</sup>)</td></tr>
+	<tr></tr><th>Insertion sort</th><td>&Theta; (n<sup>2</sup>)</td><td>&Theta; (n<sup>2</sup>)</td></tr>
+	<tr></tr><th>Insertion sort</th><td>&Theta; (n<sup>2</sup>)</td><td>&Theta; (n<sup>2</sup>)</td></tr>
+</table>
+
+
+<h3 id="bubble-sort"> Bubble Sort </h3>
+
+
+<h3> Merge Sort </h3>
+
+<ul>
+	<li> <a href="./mergesort.html#desc">description</a> </li>
+	<li> <a href="./mergesort.html#impl">implementation</a> </li>
+	<li> <a href="./mergesort.html#anime">animation</a> </li>
+</ul>
+
+<h3 id="quick-sort"> Quick sort </h3>
+
+
+<h3 id="insertion-sort"> Insertion Sort </h3>
+
+
+<h3 id="selection-sort"> Selection Sort </h3>
+
+
+<h3 id="heap-sort"> Heap Sort </h3>
+
+
+<h3 id="radix-sort"> Radix Sort </h3>
+
+
+<h3 id="shell-sort"> Shell Sort </h3>
+
+
+<h3 id="counting-sort"> Counting Sort </h3>
+
+
+<h3 id="bucket-sort"> Bucket Sort </h3>
+
+
+<h2 if="uncommon-sort"> Uncommon Sort (TODO)</h2>
+
+<h3> Tim Sort </h3>
+
+<h3> Comb Sort </h3>
+
+<h3> Pigeonhole Sort </h3>
+
+<h3> Cycle Sort </h3>
+
+<h3> Cocktail Sort </h3>
+
+<h3> Strand Sort </h3>
+
+<h2 id="demo">Demonstration (TODO)</h2>
+
+<p> After downloading the tarbar, you can do the following (assume we are using <b>Linux</b>):</p>
+
+<p><table cellpadding='2' style="font-size: 10pt;"><tr><td valign='left' bgcolor='#DDDDDD'><pre>
+#extract the tarbar
+>tar xvf sort.tar
+>cd sort/code
+>make
+#this will compile programs written in <code>C</code> and <code>C++</code> version,
+#the executable files are located in <code>C/build</code> and <code>CPP/build</code>
+#to run C version
+>./C/build/testsort
+#to run CPP version
+>./CPP/build/testsort
+#to run Python version
+>python3 ./Python/src/testsort.py</pre></td></tr></table></p>
+
+<h2 id="sort-ref"> Reference </h2>
+
+<ul>
+	<li> <a href="https://www.geeksforgeeks.org/sorting-algorithms/">geeksforgeeks</a>
+</ul>
+
+</body>
+</html>

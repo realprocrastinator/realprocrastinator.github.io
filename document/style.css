@@ -1,0 +1,246 @@
+@page {
+    size: A4 portrait;
+    margin: 0.5cm 0.5cm 0.8cm 0.5cm;
+
+    @bottom-center {
+        content: element(pn);
+    }
+}
+
+@page landscape {
+  size: A4 landscape;
+}
+
+#page-number-area {
+  position: running(pn);
+  text-align: center;
+  vertical-align: middle;
+  font-family: "Open Sans Condensed";
+  font-weight: bold;
+  font-size: 14pt;
+}
+
+#page-number-area small {
+  color: gray;
+  font-size: 10pt;
+}
+
+body {
+  font-family: "Open Sans";
+  font-size: 14pt;
+}
+
+h1, h2, h3, h4, h5, h6, .numless-title {
+  font-family: "Open Sans Condensed";
+  margin: 0.3em 0 0.3em 0;
+}
+
+h1, .numless-title {
+  font-size: 26pt;
+}
+
+h2 {
+  font-size: 23pt;
+}
+
+h3, h4, h5, h6 {
+  font-size: 20pt;
+}
+
+.numless-title {
+  prince-bookmark-level: 1;
+}
+
+p {
+  line-height: 1.2em;
+  text-align: justify;
+  margin: 0.3em 0 0.3em 0;
+  orphans: 2;
+  widows: 2;
+}
+
+ul, ol {
+  margin: 0 0 0 2em;
+  text-align: justify;
+}
+
+ul {
+  list-style-type: disc;
+}
+
+li {
+  page-break-inside: avoid;
+}
+
+/*table styles and X-references (class must 'tl' = top level)*/
+table.tl {
+  border: 1px solid black;
+  border-collapse: collapse;
+  margin: 0.5em auto;
+  counter-increment: table;
+  font-size: 80%;
+  line-height: 1.07em;
+}
+
+table.tl th {
+  background: #444;
+  color: white;
+  border: 1px dotted white;
+}
+
+table.tl tr, table.tl td {
+  border: 1px dotted black;
+}
+
+table.tl tr {
+  page-break-inside: avoid;
+}
+
+table.tl td {
+  page-break-inside: avoid;
+}
+
+table.tl th, table.tl td {
+  padding: 2px 4px;
+}
+
+table.tl ul, table.tl ol {
+  text-align: left;
+  margin: 0 0 0 0.7em;
+}
+
+table.tl li::marker {
+  text-align: center;
+  padding-right: 0.3em;
+}
+
+a.link-table {
+  content: "Table " target-counter(attr(href), table);
+}
+
+table.tl caption {
+  font-size: 9pt;
+  font-weight: bold;
+  margin-top: 0.3em;
+  margin-bottom: 0.5em;
+}
+
+table.tl caption::before {
+  content: "Table " counter(table) " - ";
+}
+
+/*link styles and section numbering*/
+a {
+  color: black;
+}
+
+a.link-secnum-h1::before {
+  content: "Section " target-counter(attr(href), h1) " ";
+}
+
+a.link-secnum-h2::before {
+  content: "Section " target-counter(attr(href), h1) "." target-counter(attr(href), h2) " ";
+}
+
+a.link-secnum-h3::before {
+  content: "Section " target-counter(attr(href), h1) "." target-counter(attr(href), h2) "." target-counter(attr(href), h3) " ";
+}
+
+a.link-secnum-h4::before {
+  content: "Section " target-counter(attr(href), h1) "." target-counter(attr(href), h2) "." target-counter(attr(href), h3) "." target-counter(attr(href), h4) " ";
+}
+
+a.link-secnum-h5::before {
+  content: "Section " target-counter(attr(href), h1) "." target-counter(attr(href), h2) "." target-counter(attr(href), h3) "." target-counter(attr(href), h4) "." target-counter(attr(href), h5) " ";
+}
+
+a.link-secnum-h6::before {
+  content: "Section " target-counter(attr(href), h1) "." target-counter(attr(href), h2) "." target-counter(attr(href), h3) "." target-counter(attr(href), h4) "." target-counter(attr(href), h5) "." target-counter(attr(href), h6) " ";
+}
+
+/*references*/
+a.dupelink {
+  content: attr(href);
+}
+
+#references-contents {
+  display: table;
+  text-align: left;
+}
+
+#references-contents .references-entry {
+  display: table-row;
+}
+
+#references-contents .references-entry div {
+  display: table-cell;
+}
+
+#references-contents .references-entry .references-backlink {
+  padding-right: 0.5em;
+}
+
+/*pt3 change*/
+span.change3 {
+  background: yellow;
+}
+
+/*chapter number*/
+h1 {
+  counter-increment: h1;
+  counter-reset: h2 h3 h4 h5 h6;
+  prince-bookmark-label: counter(h1) ". " content();
+}
+
+h1::before {
+  content: counter(h1) ". ";
+}
+
+h2 {
+  counter-increment: h2;
+  counter-reset: h3 h4 h5 h6;
+  prince-bookmark-label: counter(h1) "." counter(h2) ". " content();
+}
+
+h2::before {
+  content: counter(h1) "." counter(h2) ". ";
+}
+
+h3 {
+  counter-increment: h3;
+  counter-reset: h4 h5 h6;
+  prince-bookmark-label: counter(h1) "." counter(h2) "." counter(h3) ". " content();
+}
+
+h3::before {
+  content: counter(h1) "." counter(h2) "." counter(h3) ". ";
+}
+
+h4 {
+  counter-increment: h4;
+  counter-reset: h5 h6;
+  prince-bookmark-label: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) ". " content();
+}
+
+h4::before {
+  content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) ". ";
+}
+
+h5 {
+  counter-increment: h5;
+  counter-reset: h6;
+  prince-bookmark-label: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ". " content();
+}
+
+h5::before {
+  content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) ". ";
+}
+
+h6 {
+  counter-increment: h6;
+  prince-bookmark-label: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." counter(h6) ". " content();
+}
+
+h6::before {
+  content: counter(h1) "." counter(h2) "." counter(h3) "." counter(h4) "." counter(h5) "." content(h6) ". ";
+}
