@@ -59,24 +59,21 @@ p {
   widows: 2;
 }
 
-ul, ol {
-  margin: 0 0 0 2em;
-  text-align: justify;
-}
-
-ul {
-  list-style-type: disc;
-}
-
-li {
+li.i {
+  margin-top: 3px;
   page-break-inside: avoid;
+}
+
+a.i {
+  font-size:20pt;
+  color:#9999FF;
 }
 
 /*table styles and X-references (class must 'tl' = top level)*/
 table.tl {
   border: 1px solid black;
   border-collapse: collapse;
-  margin: 0.5em auto;
+  margin: 2em auto;
   counter-increment: table;
   font-size: 80%;
   line-height: 1.07em;
