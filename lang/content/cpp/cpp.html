@@ -1,0 +1,426 @@
+<html>
+<head><title>Programming Languages Review Notes</title>
+<link href='document/style.css' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<a href="../../index.html"><span style="font-size:14pt;">[HOME]</span></a>
+
+<h1>C++ Tips</h1>
+<p>In this chapter, I would like to share what I've learned about C++ as well as the questions that puzzled me before. I'm <strong>definitely not</strong> an expert in C++, instead, I'm a <strong>newbie</strong> who is eager to learn! Therefore, there might things not correct in what I've written, please feel free to contact me and let me know!</p>
+<p>Some of the contents are taken from the lecture notes when I was studying at UNSW or from other sources like blogs, forums, etc, I will put references to those contents if they are free to share.</p>
+<p>When I was studying at C++, we used <strong>C++20 standard</strong>, hence, don't be surprised if you see some C++20 features. However, most of the content is compatible with C++11 or newer.</p>
+<h2>Concepts of Class</h2>
+<p>Class can represent concepts, such as <strong>person</strong>, <strong>animal</strong>, etc.</p>
+<p>There are two generic relations in <strong>Object Oriented Programming (OOP)</strong>:</p>
+<ul>
+<li><p><strong>Composition</strong>:</p>
+<ul>
+<li><p>Relations between <strong>data members</strong>.</p></li>
+<li><p>For example, we can implement a class represents concept of complex numbers, then there can be two data members in the class, which represents the <strong>imaginary part</strong> and the <strong>real part</strong>. They make up the complex number: real + i * im.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">class</span> Complex {</a>
+<a class="sourceLine" id="cb1-2" title="2"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb1-3" title="3">    <span class="dt">double</span> im; <span class="co">// imaginary part</span></a>
+<a class="sourceLine" id="cb1-4" title="4">    <span class="dt">double</span> re; <span class="co">// real part</span></a>
+<a class="sourceLine" id="cb1-5" title="5">...</a>
+<a class="sourceLine" id="cb1-6" title="6">};</a></code></pre></div></li>
+</ul></li>
+<li><p><strong>Inheritance</strong>:</p>
+<ul>
+<li><p>Relations between <strong>classes</strong>.</p></li>
+<li><p>For example, we can implement a class to represent the concept of <strong>animals</strong>. However, <strong>animals</strong> are generic definitions, we can further derive it into smaller concepts such as <strong>land animals</strong>, etc. By doing, so we might encounter a situation to represent a concept of <strong>dogs</strong>. We can see, the way we reach <strong>dogs</strong> is through a <strong>derivation</strong>. We have a <strong>parent</strong> concept <strong>of animals</strong> and a child concept of the <strong>dogs</strong>. Dogs <strong>are a subset of animals</strong> and they have the <strong>common attributes</strong> that animals have. So we can say dogs <strong>inherit</strong> the attributes of animals. They have eyes, they can move, and so on, but they also have <strong>unique attributes</strong> that not all animals have, such as their vocalization is "wolf" instead of "meow".</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">class</span> Animal {</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb2-3" title="3">    <span class="dt">void</span> move(<span class="dt">void</span>){}   <span class="co">// common attributes</span></a>
+<a class="sourceLine" id="cb2-4" title="4">    <span class="dt">int</span> neyes;          </a>
+<a class="sourceLine" id="cb2-5" title="5">...</a>
+<a class="sourceLine" id="cb2-6" title="6">};</a>
+<a class="sourceLine" id="cb2-7" title="7"></a>
+<a class="sourceLine" id="cb2-8" title="8"><span class="kw">class</span> Dog: <span class="kw">public</span> Animal {</a>
+<a class="sourceLine" id="cb2-9" title="9"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb2-10" title="10">    <span class="kw">auto</span> sound(<span class="dt">void</span>) <span class="at">const</span> -&gt; <span class="bu">std::</span>String {</a>
+<a class="sourceLine" id="cb2-11" title="11">        <span class="cf">return</span> <span class="bu">std::</span>String(<span class="st">&quot;Wolf&quot;</span>);</a>
+<a class="sourceLine" id="cb2-12" title="12">    }   <span class="co">// unique attributes</span></a>
+<a class="sourceLine" id="cb2-13" title="13">};</a></code></pre></div></li>
+</ul></li>
+</ul>
+<p>The <strong>Inheritance</strong> feature in C++ looks awesome, it makes programming more natural and closer to our daily life. However, we need to fully understand the principles and rules under the hood to drive this powerful feature. Otherwise, we will scratching our head and figuring our why things not work as we expect!</p>
+<p><img src="/home/kukuku/Myreviews/lang/content/img/cpp-meme.jpeg" /></p>
+<p>The following contents relate to the questions I've confronted when learning C++.</p>
+<h3>Constructors and Destructors</h3>
+<h4>Exception Safety?</h4>
+<p>TODO</p>
+<h3>Member functions?</h3>
+<p>TODO</p>
+<h4>Name Mangling</h4>
+<ul>
+<li>Difference static vs non-static, scopes are different!</li>
+<li>Why same function names doesn't conflict at linking satge?
+<ul>
+<li>name mangling! rules? _ZN6Method6methodEv</li>
+<li>member functions vs normal functions?
+<ul>
+<li>member functions can be override! defined as weak symbols, but why?</li>
+<li>virtual functions don't have symbols!</li>
+</ul></li>
+</ul></li>
+<li>Stored where? Text sectors. <code>nm program | grep fun name</code></li>
+</ul>
+<h2>Memory Resources</h2>
+<h3>How big is my class?</h3>
+<p>One commonly asked question is what is the size of my <strong>structure</strong> and <strong>class</strong> in C++. In C++, structure and class are almost the same except for the default visibility. So let's have a look at how to calculate the size of a class.</p>
+<h4>What if my class is empty?</h4>
+<div class="sourceCode" id="cb3"><pre class="sourceCode c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb3-1" title="1"><span class="co">// 1 byte</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">class</span> Empty {  </a>
+<a class="sourceLine" id="cb3-3" title="3">};</a></code></pre></div>
+<p>An empty class takes one byte rather than zero bytes. This is because, classes internally are some data structures implemented by the compiler, and will be stored in the memory. Two different classes will have different virtual addresses. That's why they occupy one byte in the memory though they are empty classes.</p>
+<h4>What if we consider the underlying architecture?</h4>
+<div class="sourceCode" id="cb4"><pre class="sourceCode c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb4-1" title="1"><span class="co">// considering the underlying architecture</span></a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">class</span> A {</a>
+<a class="sourceLine" id="cb4-3" title="3"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb4-4" title="4">    <span class="dt">long</span> a;</a>
+<a class="sourceLine" id="cb4-5" title="5">};</a></code></pre></div>
+<p>How big is the above class? You may say 8 bytes! Really!? This might not be true. As we all know, normally our machine has 32 bits and 64 bits depending on the underlying CPU architecture. Nowadays, our laptops or desktops are usually 64 bits machines such as my Dell Inspiron 7590 armed with Intel Skylake+++++......But we also have 32 bits machine! The <strong>long</strong> type on 32 bits machine is <strong>4 bytes</strong> (see <a href="https://en.wikipedia.org/wiki/C_data_types">C Data Types</a> for more details)! So be very careful about those architecture-dependent data types as well as pointers!</p>
+<h4>What if we consider alignment?</h4>
+<div class="sourceCode" id="cb5"><pre class="sourceCode c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb5-1" title="1"><span class="co">// considering the alignment</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">class</span> A {</a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb5-4" title="4">    <span class="dt">long</span> a;</a>
+<a class="sourceLine" id="cb5-5" title="5">    <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb5-6" title="6">};</a></code></pre></div>
+<p>In the above example, we see a char type member is below the long type member, let's assume we are using a 64-bit machine. Then how big is this class? You mat say 5 bytes without hesitation. But this is not always true! We need to consider compilers' behaviours as well. The compiler might <strong>align</strong> the data structure to maximize the optimization and improve performance (You can see more details on <a href="https://en.wikipedia.org/wiki/Data_structure_alignment">Data structure alignment</a> and <a href="https://stackoverflow.com/questions/119123/why-isnt-sizeof-for-a-struct-equal-to-the-sum-of-sizeof-of-each-member/119134#119134">Purpose of padding</a>).</p>
+<p>To verify this let's see some more tests.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb6-1" title="1"><span class="co">// alignment? The output are generated on my machine, might be diffrent on yours!</span></a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="co">// 1 byte</span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="kw">class</span> CharOnly {</a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb6-6" title="6">  <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb6-7" title="7">};</a>
+<a class="sourceLine" id="cb6-8" title="8"></a>
+<a class="sourceLine" id="cb6-9" title="9"><span class="co">// char after int, 8 bytes</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="co">// 8 bytes</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="kw">class</span> IntChar {</a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb6-13" title="13">  <span class="dt">int</span> a;</a>
+<a class="sourceLine" id="cb6-14" title="14">  <span class="dt">char</span> b;</a>
+<a class="sourceLine" id="cb6-15" title="15">};</a>
+<a class="sourceLine" id="cb6-16" title="16"></a>
+<a class="sourceLine" id="cb6-17" title="17"><span class="co">// char before int</span></a>
+<a class="sourceLine" id="cb6-18" title="18"><span class="co">// 8 bytes</span></a>
+<a class="sourceLine" id="cb6-19" title="19"><span class="kw">class</span> CharInt {</a>
+<a class="sourceLine" id="cb6-20" title="20"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb6-21" title="21">  <span class="dt">char</span> a;</a>
+<a class="sourceLine" id="cb6-22" title="22">  <span class="dt">int</span> b;</a>
+<a class="sourceLine" id="cb6-23" title="23">};</a>
+<a class="sourceLine" id="cb6-24" title="24"></a>
+<a class="sourceLine" id="cb6-25" title="25"><span class="co">// char before long</span></a>
+<a class="sourceLine" id="cb6-26" title="26"><span class="co">// 16 bytes</span></a>
+<a class="sourceLine" id="cb6-27" title="27"><span class="kw">class</span> CharLong {</a>
+<a class="sourceLine" id="cb6-28" title="28"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb6-29" title="29">  <span class="dt">char</span> a;</a>
+<a class="sourceLine" id="cb6-30" title="30">  <span class="dt">long</span> b;</a>
+<a class="sourceLine" id="cb6-31" title="31">};</a>
+<a class="sourceLine" id="cb6-32" title="32"></a>
+<a class="sourceLine" id="cb6-33" title="33"><span class="co">// Int before long</span></a>
+<a class="sourceLine" id="cb6-34" title="34"><span class="co">// 16 bytes</span></a>
+<a class="sourceLine" id="cb6-35" title="35"><span class="kw">class</span> IntLong {</a>
+<a class="sourceLine" id="cb6-36" title="36"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb6-37" title="37">  <span class="dt">int</span> a;</a>
+<a class="sourceLine" id="cb6-38" title="38">  <span class="dt">long</span> b;</a>
+<a class="sourceLine" id="cb6-39" title="39">};</a>
+<a class="sourceLine" id="cb6-40" title="40"></a>
+<a class="sourceLine" id="cb6-41" title="41"><span class="co">// Int after long</span></a>
+<a class="sourceLine" id="cb6-42" title="42"><span class="co">// 16 bytes</span></a>
+<a class="sourceLine" id="cb6-43" title="43"><span class="kw">class</span> LongInt {</a>
+<a class="sourceLine" id="cb6-44" title="44"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb6-45" title="45">  <span class="dt">long</span> a;</a>
+<a class="sourceLine" id="cb6-46" title="46">  <span class="dt">int</span> b;</a>
+<a class="sourceLine" id="cb6-47" title="47">};</a></code></pre></div>
+<p>On my machine, the compiler doesn't do an alignment to <em>CharOnly</em>, hence it's 1 byte only. But it will do an alignment to the other classes. No matter we place a char type member before or after the int type member. The compiler will align the data to a multiple of 4 bytes. While if we place char or int type before/after a long type member, the compiler will align the data to a multiple of 8 bytes.</p>
+<h4>What if we have member functions in class?</h4>
+<p>In C++, functions defined inside a class are called member functions. Those member functions can be <strong>virtual</strong> or <strong>non-virtual</strong>. And the non-virtual member functions can be <strong>static</strong> or <strong>non-static</strong>. Let's take a look at those.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode c++"><code class="sourceCode cpp"><a class="sourceLine" id="cb7-1" title="1"><span class="co">// 1 byte</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="kw">class</span> Method {</a>
+<a class="sourceLine" id="cb7-3" title="3"><span class="kw">public</span>: </a>
+<a class="sourceLine" id="cb7-4" title="4">  <span class="dt">void</span> method(<span class="dt">void</span>) {}</a>
+<a class="sourceLine" id="cb7-5" title="5">};</a>
+<a class="sourceLine" id="cb7-6" title="6"></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="co">// 1 byte</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="kw">class</span> InlineMethod {</a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="kw">public</span>: </a>
+<a class="sourceLine" id="cb7-10" title="10">  <span class="kw">inline</span> <span class="dt">void</span> method(<span class="dt">void</span>) {}</a>
+<a class="sourceLine" id="cb7-11" title="11">};</a>
+<a class="sourceLine" id="cb7-12" title="12"></a>
+<a class="sourceLine" id="cb7-13" title="13"><span class="co">// 1 byte</span></a>
+<a class="sourceLine" id="cb7-14" title="14"><span class="kw">class</span> StaticMethod {</a>
+<a class="sourceLine" id="cb7-15" title="15"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb7-16" title="16">  <span class="at">static</span> <span class="dt">void</span> static_method(<span class="dt">void</span>) {} </a>
+<a class="sourceLine" id="cb7-17" title="17">};</a>
+<a class="sourceLine" id="cb7-18" title="18"></a>
+<a class="sourceLine" id="cb7-19" title="19"><span class="co">// 8 bytes</span></a>
+<a class="sourceLine" id="cb7-20" title="20"><span class="kw">class</span> VirtualMethod {</a>
+<a class="sourceLine" id="cb7-21" title="21"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb7-22" title="22">  <span class="kw">virtual</span> <span class="dt">void</span> method(<span class="dt">void</span>) {} </a>
+<a class="sourceLine" id="cb7-23" title="23">};</a>
+<a class="sourceLine" id="cb7-24" title="24"></a>
+<a class="sourceLine" id="cb7-25" title="25"><span class="co">// 8 bytes</span></a>
+<a class="sourceLine" id="cb7-26" title="26"><span class="kw">class</span> PureVirtualMethod {</a>
+<a class="sourceLine" id="cb7-27" title="27"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb7-28" title="28">  <span class="kw">virtual</span> <span class="dt">void</span> method(<span class="dt">void</span>) = <span class="dv">0</span>; </a>
+<a class="sourceLine" id="cb7-29" title="29">};</a></code></pre></div>
+<p>In the above example, except for the member functions implemented as virtual functions or pure virtual functions, all other classes are 1 byte. If we are using virtual functions inside the class, then an <strong>extra pointer to the class's vTable</strong> will get stored as the first data member in the class to allow a dynamic binding at runtime. If the member functions are implemented just like normal functions then there will be <strong>no vTables allocated</strong>. The golden rules in C++, <strong>you only pay for what you need</strong>!</p>
+<p>We will discuss how vTables resolve the current function to call at runtime in later sections. However, now lets into more details into C++'s compilers treat non-virtual member functions.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb8-1" title="1"><span class="co">// 1 byte</span></a>
+<a class="sourceLine" id="cb8-2" title="2"><span class="kw">class</span> Method {</a>
+<a class="sourceLine" id="cb8-3" title="3"><span class="kw">public</span>: </a>
+<a class="sourceLine" id="cb8-4" title="4">  <span class="dt">void</span> method(<span class="dt">void</span>) {</a>
+<a class="sourceLine" id="cb8-5" title="5">    cout &lt;&lt; <span class="st">&quot;class method&quot;</span> &lt;&lt; <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span>;</a>
+<a class="sourceLine" id="cb8-6" title="6">  }</a>
+<a class="sourceLine" id="cb8-7" title="7">};</a>
+<a class="sourceLine" id="cb8-8" title="8"></a>
+<a class="sourceLine" id="cb8-9" title="9"><span class="co">// 1 byte</span></a>
+<a class="sourceLine" id="cb8-10" title="10"><span class="kw">class</span> InlineMethod {</a>
+<a class="sourceLine" id="cb8-11" title="11"><span class="kw">public</span>: </a>
+<a class="sourceLine" id="cb8-12" title="12">  <span class="kw">inline</span> <span class="dt">void</span> method(<span class="dt">void</span>) {</a>
+<a class="sourceLine" id="cb8-13" title="13">    cout &lt;&lt; <span class="st">&quot;inline class method&quot;</span> &lt;&lt; <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span>;</a>
+<a class="sourceLine" id="cb8-14" title="14">  }</a>
+<a class="sourceLine" id="cb8-15" title="15">};</a>
+<a class="sourceLine" id="cb8-16" title="16"></a>
+<a class="sourceLine" id="cb8-17" title="17"><span class="co">// 1 byte</span></a>
+<a class="sourceLine" id="cb8-18" title="18"><span class="kw">class</span> StaticMethod {</a>
+<a class="sourceLine" id="cb8-19" title="19"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb8-20" title="20">  <span class="at">static</span> <span class="dt">void</span> static_method(<span class="dt">void</span>) {</a>
+<a class="sourceLine" id="cb8-21" title="21">    cout &lt;&lt; <span class="st">&quot;static class method&quot;</span> &lt;&lt; <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span>;</a>
+<a class="sourceLine" id="cb8-22" title="22">  } </a>
+<a class="sourceLine" id="cb8-23" title="23">};</a>
+<a class="sourceLine" id="cb8-24" title="24"></a>
+<a class="sourceLine" id="cb8-25" title="25"><span class="co">// 8 bytes</span></a>
+<a class="sourceLine" id="cb8-26" title="26"><span class="kw">class</span> VirtualMethod {</a>
+<a class="sourceLine" id="cb8-27" title="27"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb8-28" title="28">  <span class="kw">virtual</span> <span class="dt">void</span> virtual_method(<span class="dt">void</span>) {} </a>
+<a class="sourceLine" id="cb8-29" title="29">};</a>
+<a class="sourceLine" id="cb8-30" title="30"></a>
+<a class="sourceLine" id="cb8-31" title="31"><span class="co">// 8 bytes</span></a>
+<a class="sourceLine" id="cb8-32" title="32"><span class="kw">class</span> PureVirtualMethod {</a>
+<a class="sourceLine" id="cb8-33" title="33"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb8-34" title="34">  <span class="kw">virtual</span> <span class="dt">void</span> pure_virtual_method(<span class="dt">void</span>) = <span class="dv">0</span>; </a>
+<a class="sourceLine" id="cb8-35" title="35">};</a></code></pre></div>
+<h5>Non-virtual member functions</h5>
+<p>In C++, both <strong>non-static</strong> and <strong>static</strong> member functions in the class <strong>don't occupy</strong> the memory space of that class. However, if we add a virtual keyword to those functions, then we must take the pointer to the <strong>vTable</strong> into account when we calculate the size of that class. To understand why member functions don't occupy the size of a class, we need to understand where how member functions operate under the hood.</p>
+<h5>How does member function work at assembly level?</h5>
+<p>Member functions are code, no matter how many instances of this class you created, there is no point to duplicate the code of member functions in a particular class. But when I was studying C++, I always think if we create an object (an instance of a class), then we invoke this object's member functions to retrieve some member data of this object, then how does the compiler know where is this object's member data stored?</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb9-1" title="1"><span class="co">// memfun.cpp</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">class</span> Age {</a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb9-4" title="4">    Age(<span class="dt">int</span> x): <span class="va">age_</span>(x) {}</a>
+<a class="sourceLine" id="cb9-5" title="5">    </a>
+<a class="sourceLine" id="cb9-6" title="6">    <span class="dt">int</span> get_age() {</a>
+<a class="sourceLine" id="cb9-7" title="7">        <span class="cf">return</span> <span class="va">age_</span>;</a>
+<a class="sourceLine" id="cb9-8" title="8">    }</a>
+<a class="sourceLine" id="cb9-9" title="9">  </a>
+<a class="sourceLine" id="cb9-10" title="10"><span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb9-11" title="11">    <span class="dt">int</span> <span class="va">age_</span>;</a>
+<a class="sourceLine" id="cb9-12" title="12">};</a>
+<a class="sourceLine" id="cb9-13" title="13"></a>
+<a class="sourceLine" id="cb9-14" title="14"><span class="dt">int</span> main (<span class="dt">void</span>) {</a>
+<a class="sourceLine" id="cb9-15" title="15">    Age myage{<span class="dv">25</span>};</a>
+<a class="sourceLine" id="cb9-16" title="16">    <span class="bu">std::</span>cout &lt;&lt; myage.get_age() &lt;&lt; <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span>;</a>
+<a class="sourceLine" id="cb9-17" title="17">    <span class="co">// you can imagine we invoke</span></a>
+<a class="sourceLine" id="cb9-18" title="18">    <span class="co">// get_age(&amp;myage)</span></a>
+<a class="sourceLine" id="cb9-19" title="19">}</a></code></pre></div>
+<p>In C++, when we invoke the non-static member functions, the compiler will pass <strong>this</strong> pointer implicitly to the member function. That's the secret of how member functions access data members. Let's verify this using the above piece of code by inspecting the assembly code. We can use the <code>objdump</code> tool on Linux.</p>
+<pre class="sourceCode"><code>00000000000012ba &lt;_ZN3Age7get_ageEv&gt;:
+    int get_age() {
+    12ba:       f3 0f 1e fa             endbr64 
+    12be:       55                      push   %rbp
+    12bf:       48 89 e5                mov    %rsp,%rbp
+    12c2:       48 89 7d f8             mov    %rdi,-0x8(%rbp)
+        return age_;
+    12c6:       48 8b 45 f8             mov    -0x8(%rbp),%rax
+    12ca:       8b 00                   mov    (%rax),%eax
+    }
+    12cc:       5d                      pop    %rbp
+    12cd:       c3                      ret    
+    12ce:       66 90                   xchg   %ax,%ax
+
+</code></pre>
+<p>Above is the assembly code generated by the GNU c++ compiler. <em>rbp</em> and <em>rsp</em> are two registers manipulating stack on x86. We saw <code>mov %rdi,-0x8(%rbp)</code> stores a value in <em>rdi</em> to the stack, then finally this value gets copied to <em>eax</em> register. We don't dive deep into what those registers are and what is the calling convention of x86_64. If you are interested please see another article about x86_64 assembly (TODO ref). Here what we need to know is <em>eax</em> stores the return value. And the <em>rdi</em> stores the first argument of our <em>get_age()</em> function. However, we see there are no explicitly defined arguments in <em>get_age()</em>! The compiler implicitly generates one for us. Is <strong>this</strong> pointer pointing to the current object? Let's verify this using GDB!</p>
+<pre class="sourceCode"><code># compile the code with non-optimizsation and with symbol information
+&gt;g++ -O0 -g ./memfun.cpp -o ./memfun
+# run GDB
+&gt;gdb ./memfun
+# set break point
+&gt;b get_age
+# run the program
+&gt;r
+# checkout the assembly view, as we want to see more details
+&gt;layout asm
+# single step to execute each instruction until we reach `mov (%rax),%eax`
+&gt;si
+...
+# Now the rax contains the `this` pointer, as we only have one data member age_,
+# the first element `this` pointer points to is the age_.
+# If we print out the value pointed by `this`, we will see 25 as expected!
+&gt; p *(int *)$rax
+</code></pre>
+<h5>Virtual member functions</h5>
+<p>In the previous example, we've seen that non-virtual member functions don't add extra size to the class, but if we are using virtual member functions, then an extra size of the pointer to a <strong>vTable</strong> will be added to the class. Lets look at an example.</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb12-1" title="1"><span class="co">// vmemfun.cpp</span></a>
+<a class="sourceLine" id="cb12-2" title="2"><span class="pp">#include </span><span class="im">&lt;iostream&gt;</span></a>
+<a class="sourceLine" id="cb12-3" title="3"></a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="kw">class</span> Age {</a>
+<a class="sourceLine" id="cb12-5" title="5"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb12-6" title="6">    Age(<span class="dt">int</span> x): <span class="va">age_</span>(x) {}</a>
+<a class="sourceLine" id="cb12-7" title="7"></a>
+<a class="sourceLine" id="cb12-8" title="8">    <span class="dt">int</span> get_age() {</a>
+<a class="sourceLine" id="cb12-9" title="9">        <span class="co">// std::cout &lt;&lt; &quot;this points @&quot; &lt;&lt; this &lt;&lt; &#39;\n&#39;;</span></a>
+<a class="sourceLine" id="cb12-10" title="10">        <span class="co">// std::cout &lt;&lt; &quot;age_ is @&quot; &lt;&lt; &amp;age_ &lt;&lt; &#39;\n&#39;;</span></a>
+<a class="sourceLine" id="cb12-11" title="11">        <span class="cf">return</span> <span class="va">age_</span>;</a>
+<a class="sourceLine" id="cb12-12" title="12">    }</a>
+<a class="sourceLine" id="cb12-13" title="13"></a>
+<a class="sourceLine" id="cb12-14" title="14">    <span class="kw">virtual</span> <span class="dt">bool</span> is_young() {</a>
+<a class="sourceLine" id="cb12-15" title="15">        <span class="cf">return</span> <span class="va">age_</span> &lt; <span class="dv">25</span>;</a>
+<a class="sourceLine" id="cb12-16" title="16">    }</a>
+<a class="sourceLine" id="cb12-17" title="17">  </a>
+<a class="sourceLine" id="cb12-18" title="18"><span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb12-19" title="19">    <span class="dt">int</span> <span class="va">age_</span>;</a>
+<a class="sourceLine" id="cb12-20" title="20">};</a>
+<a class="sourceLine" id="cb12-21" title="21"></a>
+<a class="sourceLine" id="cb12-22" title="22"><span class="dt">int</span> main (<span class="dt">void</span>) {</a>
+<a class="sourceLine" id="cb12-23" title="23">    Age myage{<span class="dv">25</span>};</a>
+<a class="sourceLine" id="cb12-24" title="24">    <span class="bu">std::</span>cout &lt;&lt; myage.get_age() &lt;&lt; <span class="ch">&#39;</span><span class="sc">\n</span><span class="ch">&#39;</span>;</a>
+<a class="sourceLine" id="cb12-25" title="25">}</a></code></pre></div>
+<p>Here we add a virtual member function named <em>is_young()</em>, let's see what will change at assembly level.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb13-1" title="1"><span class="bn">00000000000012</span><span class="er">c8</span> &lt;_ZN3Age7get_ageEv&gt;:</a>
+<a class="sourceLine" id="cb13-2" title="2">    <span class="dt">int</span> get_age() {</a>
+<a class="sourceLine" id="cb13-3" title="3">    <span class="dv">12</span><span class="er">c8</span>:       f3 <span class="dv">0</span><span class="er">f</span> <span class="dv">1</span><span class="er">e</span> fa             endbr64 </a>
+<a class="sourceLine" id="cb13-4" title="4">    <span class="dv">12</span><span class="er">cc</span>:       <span class="dv">55</span>                      push   %rbp</a>
+<a class="sourceLine" id="cb13-5" title="5">    <span class="dv">12</span><span class="er">cd</span>:       <span class="dv">48</span> <span class="dv">89</span> e5                mov    %rsp,%rbp</a>
+<a class="sourceLine" id="cb13-6" title="6">    <span class="dv">12</span><span class="er">d0</span>:       <span class="dv">48</span> <span class="dv">89</span> <span class="dv">7</span><span class="bu">d</span> f8             mov    %rdi,-<span class="bn">0x8</span>(%rbp)</a>
+<a class="sourceLine" id="cb13-7" title="7">        <span class="cf">return</span> <span class="va">age_</span>;</a>
+<a class="sourceLine" id="cb13-8" title="8">    <span class="dv">12</span><span class="er">d4</span>:       <span class="dv">48</span> <span class="dv">8</span><span class="er">b</span> <span class="dv">45</span> f8             mov    -<span class="bn">0x8</span>(%rbp),%rax</a>
+<a class="sourceLine" id="cb13-9" title="9">    <span class="dv">12</span><span class="er">d8</span>:       <span class="dv">8</span><span class="er">b</span> <span class="dv">40</span> <span class="er">08</span>                mov    <span class="bn">0x8</span>(%rax),%eax <span class="er"># before was mov (%rax),%eax</span></a>
+<a class="sourceLine" id="cb13-10" title="10">    }</a>
+<a class="sourceLine" id="cb13-11" title="11">    <span class="dv">12</span><span class="er">db</span>:       <span class="dv">5</span><span class="bu">d</span>                      pop    %rbp</a>
+<a class="sourceLine" id="cb13-12" title="12">    <span class="dv">12</span><span class="er">dc</span>:       c3                      ret    </a>
+<a class="sourceLine" id="cb13-13" title="13">    <span class="dv">12</span><span class="er">dd</span>:       <span class="dv">90</span>                      nop</a></code></pre></div>
+<p>We see in the above assembly code, the main difference is to use <strong>this</strong> pointer to get <code>age_</code>, this time we do <code>mov 0x8(%rax),%eax</code> to add 8 bytes to <strong>this</strong> pointer to get the data member we want. That's because the compiler stored the <strong>vTable</strong> pointer as our first data member! Let's use GDB to verify this assumption.</p>
+<pre class="sourceCode"><code># compile the code with non-optimizsation and with symbol information
+&gt;g++ -O0 -g ./vmemfun.cpp -o ./vmemfun
+# run GDB
+&gt;gdb ./vmemfun
+# set break point
+&gt;b get_agesad
+# run the program
+&gt;r
+# let&#39;s see what is data structure the `this` pointer points to  
+&gt;p *this
+# this = 0x7fffffffe1f0: {_vptr.Age = 0x555555557d78 &lt;vtable for Age+16&gt;,age_ = 25}
+</code></pre>
+<p>As we expected, the first data member is the <strong>vTable</strong> pointer!</p>
+<h3>What if we consider inheritance?</h3>
+<p>In C++, we can inherit from other classes, this feature will add a little bit difficulty when we try to calculate the size of the class. Let's take a look at the following example.</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb15-1" title="1"><span class="co">// 16 bytes</span></a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="kw">class</span> Person {</a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb15-4" title="4">  <span class="kw">virtual</span> <span class="bu">std::</span>string occupation() {</a>
+<a class="sourceLine" id="cb15-5" title="5">    <span class="cf">return</span> <span class="bu">std::</span>string(<span class="st">&quot;Unknown occupation.</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb15-6" title="6">  }</a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb15-8" title="8">  <span class="dt">char</span>* <span class="va">name_</span>;</a>
+<a class="sourceLine" id="cb15-9" title="9">};</a>
+<a class="sourceLine" id="cb15-10" title="10"></a>
+<a class="sourceLine" id="cb15-11" title="11"><span class="co">// 24 bytes</span></a>
+<a class="sourceLine" id="cb15-12" title="12"><span class="kw">class</span> Student : <span class="kw">public</span> Person {</a>
+<a class="sourceLine" id="cb15-13" title="13"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb15-14" title="14">  <span class="bu">std::</span>string occupation() <span class="kw">override</span> {</a>
+<a class="sourceLine" id="cb15-15" title="15">    <span class="cf">return</span> <span class="bu">std::</span>string(<span class="st">&quot;Student.</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb15-16" title="16">  }</a>
+<a class="sourceLine" id="cb15-17" title="17">    </a>
+<a class="sourceLine" id="cb15-18" title="18">  <span class="kw">virtual</span> <span class="dt">int</span> salary() {</a>
+<a class="sourceLine" id="cb15-19" title="19">      <span class="cf">return</span> <span class="dv">0</span>;</a>
+<a class="sourceLine" id="cb15-20" title="20">  }</a>
+<a class="sourceLine" id="cb15-21" title="21"><span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb15-22" title="22">  <span class="dt">int</span> <span class="va">id_</span>;</a>
+<a class="sourceLine" id="cb15-23" title="23">};</a>
+<a class="sourceLine" id="cb15-24" title="24"></a>
+<a class="sourceLine" id="cb15-25" title="25"><span class="co">// 24 bytes</span></a>
+<a class="sourceLine" id="cb15-26" title="26"><span class="kw">class</span> Tutor : <span class="kw">public</span> Student {</a>
+<a class="sourceLine" id="cb15-27" title="27"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb15-28" title="28">  <span class="bu">std::</span>string occupation() <span class="kw">override</span> {</a>
+<a class="sourceLine" id="cb15-29" title="29">    <span class="cf">return</span> <span class="bu">std::</span>string(<span class="st">&quot;Student and tutor.</span><span class="sc">\n</span><span class="st">&quot;</span>);</a>
+<a class="sourceLine" id="cb15-30" title="30">  }</a>
+<a class="sourceLine" id="cb15-31" title="31">    </a>
+<a class="sourceLine" id="cb15-32" title="32">  <span class="dt">int</span> salary() <span class="kw">override</span> {</a>
+<a class="sourceLine" id="cb15-33" title="33">    <span class="cf">return</span> <span class="dv">60</span>;</a>
+<a class="sourceLine" id="cb15-34" title="34">  }</a>
+<a class="sourceLine" id="cb15-35" title="35">};</a></code></pre></div>
+<p>In the above example, we have a basic class Person, and derived class Student and Tutor. On my machine, the size of the Person class is 16 bytes (8 bytes for the <strong>vTable</strong> pointer and 8 bytes for the char type pointer). And both the student class and the Tutor classes are 24 bytes (8 bytes for <strong>the vTable</strong> pointer, 8 bytes for char type pointer, 4 bytes for int, and 4 bytes for padding). We can see here, although we have two virtual member functions in both Student and Person classes, only one <strong>vTable</strong> is allocated.</p>
+<p>Now let's add a little bit more complexity, what if we have a class that has multiple inheritances from other basic classes (also known as <strong>Diamond inheritance</strong>)?</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb16-1" title="1"><span class="co">// 4 bytes</span></a>
+<a class="sourceLine" id="cb16-2" title="2"><span class="kw">class</span> A {</a>
+<a class="sourceLine" id="cb16-3" title="3">  <span class="dt">int</span> a;</a>
+<a class="sourceLine" id="cb16-4" title="4">};</a>
+<a class="sourceLine" id="cb16-5" title="5"></a>
+<a class="sourceLine" id="cb16-6" title="6"><span class="co">// 8 bytes</span></a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="kw">class</span> B: <span class="kw">public</span> A {</a>
+<a class="sourceLine" id="cb16-8" title="8">  <span class="dt">int</span> b;</a>
+<a class="sourceLine" id="cb16-9" title="9">};</a>
+<a class="sourceLine" id="cb16-10" title="10"></a>
+<a class="sourceLine" id="cb16-11" title="11"><span class="co">// 8 bytes</span></a>
+<a class="sourceLine" id="cb16-12" title="12"><span class="kw">class</span> C: <span class="kw">public</span> A {</a>
+<a class="sourceLine" id="cb16-13" title="13">  <span class="dt">int</span> c;</a>
+<a class="sourceLine" id="cb16-14" title="14">};</a>
+<a class="sourceLine" id="cb16-15" title="15"></a>
+<a class="sourceLine" id="cb16-16" title="16"><span class="co">// 20 bytes</span></a>
+<a class="sourceLine" id="cb16-17" title="17"><span class="kw">class</span> D: <span class="kw">public</span> B, C {</a>
+<a class="sourceLine" id="cb16-18" title="18">  <span class="dt">int</span> d;</a>
+<a class="sourceLine" id="cb16-19" title="19">};</a></code></pre></div>
+<p>On my machine, class A is 4 bytes and both class B and C are inherited from class A which have 8 bytes as expected. However, why class D is 20 bytes in total? That's because D is inherited from both B and C, and B and C are inherited from class A, according to C++'s rule, class A will be duplicated to separate the inheritance path! So 20 bytes is the size of B (4 bytes of b + 4 bytes of a) + the size of C (4 bytes of c + 4 bytes of a) + the size of D (4 bytes of d). To avoid such problems and ambiguity, we will use <strong>the virtual</strong> keyword to mark the inherited class (TODO see ref for more details)!</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode cpp"><code class="sourceCode cpp"><a class="sourceLine" id="cb17-1" title="1"><span class="co">// 4 bytes</span></a>
+<a class="sourceLine" id="cb17-2" title="2"><span class="kw">class</span> A {</a>
+<a class="sourceLine" id="cb17-3" title="3">  <span class="dt">int</span> a;</a>
+<a class="sourceLine" id="cb17-4" title="4">};</a>
+<a class="sourceLine" id="cb17-5" title="5"></a>
+<a class="sourceLine" id="cb17-6" title="6"><span class="co">// 16 bytes</span></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="kw">class</span> B: <span class="kw">public</span> A {</a>
+<a class="sourceLine" id="cb17-8" title="8"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb17-9" title="9">  <span class="kw">virtual</span> <span class="dt">void</span> fun_B() {}</a>
+<a class="sourceLine" id="cb17-10" title="10"><span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb17-11" title="11">  <span class="dt">int</span> b;</a>
+<a class="sourceLine" id="cb17-12" title="12">};</a>
+<a class="sourceLine" id="cb17-13" title="13"></a>
+<a class="sourceLine" id="cb17-14" title="14"><span class="co">// 16 bytes</span></a>
+<a class="sourceLine" id="cb17-15" title="15"><span class="kw">class</span> C: <span class="kw">public</span> A {</a>
+<a class="sourceLine" id="cb17-16" title="16"><span class="kw">public</span>:</a>
+<a class="sourceLine" id="cb17-17" title="17">  <span class="kw">virtual</span> <span class="dt">void</span> fun_C() {}</a>
+<a class="sourceLine" id="cb17-18" title="18"><span class="kw">private</span>:</a>
+<a class="sourceLine" id="cb17-19" title="19">  <span class="dt">int</span> c;</a>
+<a class="sourceLine" id="cb17-20" title="20">};</a>
+<a class="sourceLine" id="cb17-21" title="21"></a>
+<a class="sourceLine" id="cb17-22" title="22"><span class="co">// 40 bytes</span></a>
+<a class="sourceLine" id="cb17-23" title="23"><span class="kw">class</span> D: <span class="kw">public</span> B, C {</a>
+<a class="sourceLine" id="cb17-24" title="24">  <span class="dt">int</span> d;</a>
+<a class="sourceLine" id="cb17-25" title="25">};</a></code></pre></div>
+<p>With this example, our D class becomes 40 bytes, This is because both B and C are 16 bytes due to padding, and since two separate class A will be generated, our class D will have 40 bytes (32 bytes for B and C + 4 bytes for c and padding 4 bytes).</p>
+<p>Dimond inheritance is a tricky corner case, we will look at this in a later section (TODO See Ref)</p>
+<h2>Visibility: public, protected or private?</h2>
+<p>TODO:</p>
+<h2>Runtime Polymorphism</h2>
+<ul>
+<li>vtable layout: https://shaharmike.com/cpp/vtable-part2/</li>
+</ul>
+<p>TODO:</p>
+<ul>
+<li>Dimond inheritance?
+<ul>
+<li>constructors?</li>
+<li>virtual funcitions?</li>
+<li>what if we have one two virtual functions with same names in two different inherited classes? How to resolve?</li>
+</ul></li>
+<li>polymorphism</li>
+</ul>
+<h2>References</h2>
+
+</body></html>
