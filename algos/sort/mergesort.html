@@ -9,7 +9,7 @@
     <!-- <script src="document/script.js"></script> -->
 </head>
 <body>
-<a href="index.html"><span style="font-size:14pt;">[HOME]</span></a>
+<a href="index.html"><span style="font-size:14pt;">[SORT]</span></a>
 
 <h1 id="merge-sort">Merge Sort</h1>
 
@@ -28,7 +28,10 @@
 <p>We use A to denote our array of elements, p refers to the left most index, q is the index of the middle element and r is the index of the right most element.</p> 
 <p>To implement the merge routine, we place at the end of the array a <b>sentinel</b> value to make code simpler. We use &infin; to represent the <b>sentinel</b> so that nothing can be smaller than that value.</p> 
 
-<pre><code>
+<center>
+  <table cellpadding='10' style="font-size: 13pt;"><tr>
+  <td valign='left' bgcolor='#DDDDDD'>
+<pre style="margin-top: 0;"><code>
 Merge(A, p, q, r)
   n1 = q - p - 1
   n2 = r - q
@@ -56,6 +59,8 @@ Merge-Sort(A, p, r)
    Merge-Sort(A, p, q)
    Merge-Sort(A, q + 1, r)
    Merge(A, p, q, r)</code></pre>
+</td></tr></table>
+</center>
 
 <h2 id="impl">Implementation</h1>
 
@@ -75,7 +80,6 @@ your drive code to test.
 <h3>C++</h3>
 
 <ul>
-  <li> <a href="code/CPP/src/sort/mergesort.cpp">mergesort.cpp</a> 
   <li> <a href="code/CPP/include/mergesort.hpp">mergesort.hpp</a>
 </ul>
 

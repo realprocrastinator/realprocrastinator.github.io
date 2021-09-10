@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="author" content="Jiawei Gao" />
+    <meta name="subject" content="Jiawei Gao" />
+    <title>Merge Sort</title>
+    <link rel="stylesheet" type="text/css" href="document/style.css" />
+    <!-- <script src="document/script.js"></script> -->
+</head>
+<body>
+<a href="index.html"><span style="font-size:14pt;">[SORT]</span></a>
+
+<h1 id="bubble-sort">Bubble Sort</h1>
+
+<h2 id="desc">Description</h1>
+
+<p>
+  The bubble sort algorithm picks an element and repeatedly swaps it with the adjacent elements if they are in the wrong order, then place it to the current position.
+  <ul>
+    <li> <a href="https://en.wikipedia.org/wiki/Bubble_sort">Bubble sort wiki</a>
+  </ul>
+</p>
+
+<h3 id="pseudocode">Pseudocode</h3>
+
+<p>We use A to denote our array of elements, and assume we already implemented a swap function to swap two elements. The following pseudocode will sort an array of elements in ascending order. We optimize the code by using a flag to indicate whether a swapping has happened, if no swapping happended in the inner loop, then it means the array is already in an sorted order so the algorithm can terminate.</p>  
+
+<center>
+<table cellpadding='10' style="font-size: 13pt;"><tr>
+<td valign='left' bgcolor='#DDDDDD'>
+<pre style="margin-top: 0;"><code>
+/* Pseudocode */
+
+Bubble-Sort(A)
+ n = size of A
+ swapped = false 
+ for i = 1 to n
+  for j = i + 1 to n
+    if A[j - 1] > A[j]
+      swap(A[j - 1], A[j])
+      swapped = true
+  if swapped is false
+    break</code></pre>
+</td></tr></table>
+</center>
+
+<h2 id="impl">Implementation</h1>
+
+<p> If you want to use the click-and-play version, then you can download the tarball(TODO link). 
+Please refer to <a href="index.html#demo">the demonstration section</a> for more details.
+If you are only interested in the algorithm, you can download the source files below and create 
+your drive code to test.
+</p>
+
+<h3>C</h3>
+
+<ul>
+  <li> <a href="code/C/src/sort/bubblesort.c">bubblesort.c</a> 
+  <li> <a href="code/C/include/bubblesort.h">bubblesort.h</a>
+</ul>
+
+<h3>C++</h3>
+
+<ul>
+  <li> <a href="code/CPP/src/sort/bubblesort.cpp">bubblesort.cpp</a> 
+  <li> <a href="code/CPP/include/bubblesort.hpp">bubblesort.hpp</a>
+</ul>
+
+<h3>Python</h3>
+
+<ul>
+  <li> <a href="code/Python/src/sort/bubblesort.py">bubblesort.py</a> 
+</ul>
+
+<h2 id="test">Test</h1>
+
+TODO
+
+<h2 id="anime">Animation</h1>
+
+TODO
+
+</body>
+</html>

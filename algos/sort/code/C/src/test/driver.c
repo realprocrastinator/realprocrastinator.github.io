@@ -1,6 +1,8 @@
 /* A very ugly testing code at the moment */
 
 #include <mergesort.h>
+#include <bubblesort.h>
+#include <insertionsort.h>
 #include <stdlib.h>
 #include <stdio.h>
 
@@ -35,7 +37,7 @@ int main(void) {
 
   printf("\nAfter sorting.\n");
 
-  merge_sort(arr, nmem, size, comp_fn);
+  insertion_sort(arr, nmem, size, comp_fn);
 
   for (int i = 0; i < nmem; ++i) {
     printf("%d ", arr[i]);
@@ -62,7 +64,7 @@ int main(void) {
 
   nmem = 5;
   size = sizeof(record_t);
-  merge_sort(rec, nmem, size, comp_rec_fn);
+  insertion_sort(rec, nmem, size, comp_rec_fn);
 
   for (int i = 0; i < nmem; ++i) {
     printf("rec.key=%d, rec.data=%d\n", rec[i].key, rec[i].data);

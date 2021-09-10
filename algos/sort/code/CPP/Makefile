@@ -2,7 +2,7 @@
 # tutorial code with GCC, not dealing with configuration
 # as well as the cross compiling. 
 
-CC = gcc
+CC = g++
 CCFLAGS = -Wall -Werror -g -O0 
 AR = ar
 RANLIB = ranlib
@@ -12,8 +12,8 @@ builddir = ./build
 
 LIB_DIR = $(addprefix $(srcdir)/, src/sort)
 TEST_DIR = $(addprefix $(srcdir)/, src/test)
-LIB_SRCS = $(sort $(wildcard $(addprefix $(srcdir)/, src/sort/*.c)))
-TEST_SRCS = $(sort $(wildcard $(addprefix $(srcdir)/, src/test/*.c)))
+LIB_SRCS = $(sort $(wildcard $(addprefix $(srcdir)/, src/sort/*.cpp)))
+TEST_SRCS = $(sort $(wildcard $(addprefix $(srcdir)/, src/test/*.cpp)))
 ALL_SRCS = $(sort $(wildcard $(LIB_SRCS) $(TEST_SRCS)))
 BASE_OBJS = $(addprefix $(builddir)/, $(patsubst $(srcdir)/src/%, %.o, $(basename $(ALL_SRCS))))
 ALL_OBJS = $(sort $(BASE_OBJS))
@@ -43,7 +43,7 @@ $(STATIC_LIB): $(LIB_OBJS)
 	$(AR) rc $@ $(LIB_OBJS)
 	$(RANLIB) $@
 
-$(builddir)/sort/%.o: $(LIB_DIR)/%.c
+$(LIB_OBJS): $(LIB_SRCS)
 	$(CC) $(CCFLAGS) -I./include -c $< -o $@
 
 clean:

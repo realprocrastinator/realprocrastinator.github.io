@@ -1,3 +1,5 @@
+#pragma once
+
 #include <stdlib.h>
 
 // compare to `records` based on the their keys.
